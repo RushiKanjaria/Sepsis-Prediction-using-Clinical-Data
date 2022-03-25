@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Sepsis Prediction</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <style>
+  body, html {
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans";
+  font-weight: 100;
+  display: flex;
+  overflow: hidden;
+}
+
+input ::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+input ::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+input :-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+input:focus {
+  outline: 0 transparent solid;
+}
+input:focus ::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.7);
+}
+input:focus ::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.7);
+}
+input:focus :-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.login-form {
+  min-height: auto;
+  margin: auto;
+  max-width: auto;
+  padding: auto;
+}
+
+.login-text {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0 auto;
+  max-width: 50%;
+  padding: 0.5rem;
+  text-align: center;
+}
+.login-text .fa-stack-1x {
+  color: black;
+}
+
+.login-username, .login-password {
+  background: transparent;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  display: block;
+  margin: 1rem;
+  padding: 0.5rem;
+  transition: 250ms background ease-in;
+  width: calc(100% - 3rem);
+}
+.login-username:focus, .login-password:focus {
+  background: white;
+  color: black;
+  transition: 250ms background ease-in;
+}
+
+.login-forgot-pass {
+  bottom: 0;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-size: 75%;
+  left: 0;
+  opacity: 0.6;
+  padding: 0.5rem;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+.login-forgot-pass:hover {
+  opacity: 1;
+}
+
+.login-submit {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  display: block;
+  margin: 1rem auto;
+  min-width: 1px;
+  padding: 0.25rem;
+  transition: 250ms background ease-in;
+}
+.login-submit:hover, .login-submit:focus {
+  background: white;
+  color: black;
+  transition: 250ms background ease-in;
+}
+
+[class*=underlay] {
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.underlay-photo {
+  -webkit-animation: hue-rotate 6s infinite;
+          animation: hue-rotate 6s infinite;
+  background: url("https://images.unsplash.com/photo-1607743882420-4412ee605bac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80");
+  background-size: cover;
+  -webkit-filter: grayscale(30%);
+  z-index: -1;
+}
+
+.underlay-black {
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+@-webkit-keyframes hue-rotate {
+  from {
+    -webkit-filter: grayscale(30%) hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: grayscale(30%) hue-rotate(360deg);
+  }
+}
+
+@keyframes hue-rotate {
+  from {
+    -webkit-filter: grayscale(30%) hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: grayscale(30%) hue-rotate(360deg);
+  }
+}
+  </style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<form class="login-form" action="{{ url_for("result")}}" method="post">
+  <table>
+    <tr>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="HR" name="hr" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="O2Sat" name="o2sat" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Temperature" name="temp" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="SBP" name="sbp" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="DBP" name="dbp" /></td>
+    </tr>
+    <tr>
+      
+      <td><input type="text" class="login-username" autofocus="true" placeholder="MAP" name="mp" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Resp" name="resp" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="EtCO2" name="etco2"/></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="BaseExcess" name="basex" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="HCO3" name="hco3" /></td>
+    </tr>
+    <tr>
+      
+      <td><input type="text" class="login-username" autofocus="true" placeholder="FiO2" name="fio2" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="pH" name="ph" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="PaCO2" name="paco2" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="SaO2" name="sao2" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="AST" name="ast" /></td>
+    </tr>
+    <tr>
+      
+      <td><input type="text" class="login-username" autofocus="true" placeholder="BUN" name="bun" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Alkalinephos" name="alkpho" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Calcium" name="calc" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Chloride" name="chol" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Creatinine" name="creati" /></td>
+    </tr>
+    <tr>
+      
+    </tr>
+    <tr>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Bilirubin Direct" name="bilird" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Glucose" name="gluc" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Lactate" name="lact" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Magnesium" name="magne" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Phosphate" name="phos" /></td>
+    </tr>
+    <tr>
+      
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Potassium" name="potas" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Bilirubin Total" name="bilirt" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="TroponinI" name=trop /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="HCT" name="hct" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="HGB" name="hgb" /></td>
+    </tr>
+    <tr>
+      
+      <td><input type="text" class="login-username" autofocus="true" placeholder="PTT" name="ptt" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="WBC" name="wbc" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Fibrinogen" name=fibri /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Platelets" name="plate" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Age" name="age" /></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="Gender" name="gender" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="HospAdmTime" name="hosat" /></td>
+      <td><input type="text" class="login-username" autofocus="true" placeholder="ICULOS" name="iculos" /></td>
+      <td></td>
+    </tr>
+  </table>
+  <input type="submit" value="predict" class="login-submit" />
+</form>
+<div class="underlay-photo"></div>
+<div class="underlay-black"></div> 
+<!-- partial -->
+  
+</body>
+</html>
+
