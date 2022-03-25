@@ -4,6 +4,3 @@ Sepsis is a life-threatening disorder caused by the body's response to infection
 The practice of medicine is being transformed by artificial intelligence. It is assisting doctors in more correctly diagnosing patients, making forecasts about their future health, and recommending better therapies.
 The goal of this project is early detection of sepsis using clinical data. [2] For this project, sepsis is defined as a two-point shift in the patient's Sequential Organ Failure Assessment (SOFA) score and clinical suspicion of infection, as defined by the Sepsis-3 criteria. Data used is sourced from ICU patients in hospital systems.
 To achieve our goal of early sepsis prediction we will use different machine learning models to train and test our clinical data.
-
-This project and dataset is refered from the following link:
-https://www.kaggle.com/maxskoryk/datasepsis
